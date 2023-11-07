@@ -6,6 +6,7 @@ import { ListarProductosComponent } from './pages/productos/listar-productos/lis
 import { CreateUserComponent } from './pages/users/create-user/create-user.component';
 import { LoginComponent } from './pages/users/login/login.component';
 import { TiendasComponent } from './pages/tiendas/tiendas.component';
+import { FormsModule } from '@angular/forms';
 
 const routesInicio: Routes = [
   { path: '', component: LoginComponent },
@@ -21,6 +22,6 @@ const routesInicio: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routesInicio)],
-  exports: [RouterModule]
+  exports: [RouterModule, FormsModule]
 })
 export class AppRoutingModule { }

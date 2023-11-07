@@ -19,11 +19,7 @@
                                             </small>
                                         </div>
                                     </div>
-                                    <div class="map">
-                                        <google-map height="50vh" width="100%" [options]="mapOptions"
-                                            (mapInitialized)="handleMapInitialized()">
-                                        </google-map>
-                                    </div>
+                                    <div id="map" style="width: 100%; height: 400px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -46,34 +42,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>Lima</td>
-                                                    <td>Santa Anita</td>
+                                                <tr *ngFor="let marcador of markers">
+                                                    <td>{{ marcador.departamento }}</td>
+                                                    <td>{{ marcador.title }}</td>
                                                     <td>3</td>
                                                     <td>
-                                                        <i style="font-size: 25px;" class="pe pe-7s-look text-accent"></i>&nbsp;&nbsp;
-                                                        <i style="font-size: 25px;" class="pe pe-7s-trash text-accent"></i>&nbsp;&nbsp;
-                                                        <i style="font-size: 25px;" class="pe pe-7s-pen text-accent"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Lima</td>
-                                                    <td>San Miguel</td>
-                                                    <td>3</td>
-                                                    <td>
-                                                        <i style="font-size: 25px;" class="pe pe-7s-look text-accent"><button (click)="verSanMiguel()" ></button></i>&nbsp;&nbsp;
-                                                        <i style="font-size: 25px;" class="pe pe-7s-trash text-accent"></i>&nbsp;&nbsp;
-                                                        <i style="font-size: 25px;" class="pe pe-7s-pen text-accent"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Lima</td>
-                                                    <td>San Isidro</td>
-                                                    <td>3</td>
-                                                    <td>
-                                                        <i style="font-size: 25px;" class="pe pe-7s-look text-accent"></i>&nbsp;&nbsp;
-                                                        <i style="font-size: 25px;" class="pe pe-7s-trash text-accent"></i>&nbsp;&nbsp;
-                                                        <i style="font-size: 25px;" class="pe pe-7s-pen text-accent"></i>
+                                                      <button (click)="verTiendas(marcador.title)"><i style="font-size: 25px;" class="pe pe-7s-look text-accent"></i></button>
+                                                      <button (click)="eliminarMarcador(marcador)"><i style="font-size: 25px;" class="pe pe-7s-trash text-accent"></i></button>
+                                                      <i style="font-size: 25px;" class="pe pe-7s-pen text-accent"></i>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -82,9 +58,46 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12 col-sm-12 text-center">
+                            <div class="panel panel-filled">
+                                <div class="panel-body">
+                                    <h5>Crear un Nuevo Marcador</h5>
+                                    <form (ngSubmit)="crearMarcador(newMarker);" #marcadorForm="ngForm">
+                                        <div class="form-group">
+                                            <label for="latitud">Latitud:</label>
+                                            <input type="text" class="form-control" id="latitud" name="latitud" [(ngModel)]="newMarker.position.lat" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="longitud">Longitud:</label>
+                                            <input type="text" class="form-control" id="longitud" name="longitud" [(ngModel)]="newMarker.position.lng" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="labelText">Etiqueta de Texto:</label>
+                                            <input type="text" class="form-control" id="labelText" name="labelText" [(ngModel)]="newMarker.label.text" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="departamento">Departamento:</label>
+                                            <input type="text" class="form-control" id="departamento" name="departamento" [(ngModel)]="newMarker.departamento" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="titulo">Título:</label>
+                                            <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="newMarker.title" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="informacion">Información:</label>
+                                            <textarea class="form-control" id="informacion" name="informacion" [(ngModel)]="newMarker.info" required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Crear Marcador</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<!-- Mi API KEY de Google Maps -->
+<script async src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY_AQUI"></script>
